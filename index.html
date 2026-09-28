@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>TKWS · Protótipo de estrutura</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#111312;--soft:#5E625F;--line:#E4E6E3;--paper:#FFFFFF;--mist:#F4F5F3;--night:#0C0E0D;--accent:#2F6B4F;--accent2:#8FBFA6}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,system-ui,sans-serif;font-weight:300;color:var(--ink);background:var(--paper);font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.serif{font-family:"Cormorant Garamond",Georgia,serif;font-weight:400}
+.wrap{max-width:1200px;margin:0 auto;padding:0 32px}
+.proto{background:var(--night);color:#9AA09C;font-size:11px;letter-spacing:.14em;text-align:center;padding:6px 10px;text-transform:uppercase}
+header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.hd{display:flex;align-items:center;height:76px;gap:28px;position:relative}
+.logo{font-weight:600;letter-spacing:.32em;font-size:19px;line-height:1}
+.logo small{display:block;font-size:8.5px;letter-spacing:.34em;color:var(--soft);font-weight:400;margin-top:5px}
+nav.main{display:flex;gap:4px;margin-left:auto;align-items:center}
+nav.main>a,nav.main .dd>a{font-size:13px;letter-spacing:.04em;padding:10px 12px;display:block;color:#2A2D2B}
+nav.main a:hover{color:var(--accent)}
+.dd{position:relative}
+.dd .menu{position:absolute;top:100%;left:0;background:#fff;border:1px solid var(--line);min-width:240px;padding:10px 0;opacity:0;visibility:hidden;transform:translateY(6px);transition:.2s}
+.dd:hover .menu{opacity:1;visibility:visible;transform:none}
+.dd .menu a{display:block;padding:9px 20px;font-size:13.5px}
+.dd .menu a:hover{background:var(--mist)}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:14px 26px;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:500;border:1px solid var(--ink);background:var(--ink);color:#fff;cursor:pointer;transition:.2s}
+.btn:hover{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.line{background:transparent;color:inherit;border-color:currentColor}
+.btn.sm{padding:11px 18px;font-size:11px}
+.btn.white{background:#fff;color:#111;border-color:#fff}
+.burger{display:none;margin-left:auto;background:none;border:0;font-size:24px;cursor:pointer}
+.ph{position:relative;overflow:hidden;background:#2A2F2C}
+.ph:before{content:"";position:absolute;inset:0;background:var(--g)}
+.ph:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 40%,rgba(0,0,0,.45))}
+.ph span{position:absolute;left:18px;bottom:14px;z-index:2;color:rgba(255,255,255,.75);font-size:11px;letter-spacing:.12em;text-transform:uppercase}
+.g1{--g:radial-gradient(120% 90% at 78% 18%,#E9E9E4 0,#9EA39B 32%,#3B423D 70%,#1E2320 100%)}
+.g2{--g:radial-gradient(90% 80% at 20% 25%,#DCE2DD 0,#8E9A92 35%,#34403A 75%,#161B18 100%)}
+.g3{--g:linear-gradient(115deg,#1B201D 0,#3E4741 38%,#A9B0A8 62%,#E6E7E2 78%,#59625B 100%)}
+.g4{--g:radial-gradient(100% 100% at 50% 0,#F1F1EC 0,#B7BCB3 30%,#4C5650 70%,#202522 100%)}
+.g5{--g:linear-gradient(160deg,#EEF0EB 0,#C3C9C0 30%,#6C766F 60%,#252B28 100%)}
+.g6{--g:radial-gradient(80% 70% at 70% 60%,#D7DDD6 0,#7F8B83 40%,#2B332E 80%)}
+.hero{position:relative;min-height:78vh;display:flex;align-items:flex-end;color:#fff}
+.hero .ph{position:absolute;inset:0}
+.hero .ph:after{background:linear-gradient(180deg,rgba(0,0,0,.15) 0,rgba(0,0,0,.65) 100%)}
+.hero .in{position:relative;z-index:3;padding-bottom:80px;padding-top:120px;width:100%}
+.eyebrow{font-size:11.5px;letter-spacing:.28em;text-transform:uppercase;font-weight:500}
+.hero h1{font-family:"Cormorant Garamond",serif;font-weight:400;font-size:clamp(40px,6vw,76px);line-height:1.04;margin:18px 0 22px;max-width:900px}
+.hero p{font-size:18px;max-width:600px;color:rgba(255,255,255,.85)}
+.hero .ctas{display:flex;gap:14px;margin-top:34px;flex-wrap:wrap}
+.hero .btn.line:hover{background:#fff;color:#111;border-color:#fff}
+.hero.short{min-height:56vh}
+.crumb{font-size:12px;letter-spacing:.06em;color:rgba(255,255,255,.7);margin-bottom:10px}
+.crumb a:hover{color:#fff}
+section{padding:100px 0}
+section.tight{padding:70px 0}
+.mist{background:var(--mist)}
+.night{background:var(--night);color:#fff}
+.sh{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;margin-bottom:48px;flex-wrap:wrap}
+h2{font-family:"Cormorant Garamond",serif;font-weight:400;font-size:clamp(32px,4vw,50px);line-height:1.1;max-width:720px}
+h3{font-family:"Cormorant Garamond",serif;font-weight:500;font-size:26px;line-height:1.2}
+.lead{font-size:19px;color:var(--soft);max-width:640px}
+.night .lead{color:#AEB4AF}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.stats div{padding:34px 24px;border-right:1px solid var(--line)}
+.stats div:last-child{border-right:0}
+.stats b{display:block;font-family:"Cormorant Garamond",serif;font-weight:400;font-size:48px;line-height:1}
+.stats span{font-size:13px;color:var(--soft);letter-spacing:.04em}
+.press{display:flex;gap:48px;justify-content:center;align-items:center;flex-wrap:wrap;color:#8A8F8B;font-family:"Cormorant Garamond",serif;font-size:24px;letter-spacing:.06em}
+.press small{font-family:Inter;font-size:11px;letter-spacing:.24em;text-transform:uppercase;width:100%;text-align:center;color:var(--soft)}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:28px}
+.card{display:block}
+.card .ph{aspect-ratio:4/5;margin-bottom:18px;transition:.4s}
+.card:hover .ph{filter:brightness(1.1)}
+.card h3{margin-bottom:6px}
+.card p{font-size:14px;color:var(--soft)}
+.card .more{font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;margin-top:12px;display:inline-block;border-bottom:1px solid currentColor;padding-bottom:2px}
+.cards.wide .ph{aspect-ratio:16/10}
+.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.gallery .ph{aspect-ratio:4/3}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center}
+.split .ph{aspect-ratio:4/5}
+.answer{font-family:"Cormorant Garamond",serif;font-size:clamp(24px,2.6vw,32px);line-height:1.35;max-width:900px}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));border-top:1px solid rgba(255,255,255,.15)}
+.steps div{padding:34px 28px 10px 0}
+.steps b{font-family:"Cormorant Garamond",serif;font-size:44px;font-weight:400;color:var(--accent2);display:block;line-height:1}
+.steps h4{font-weight:500;font-size:16px;margin:14px 0 6px}
+.steps p{font-size:14px;color:#AEB4AF}
+.compare{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line)}
+.compare div{padding:40px;background:#fff}
+.compare div+div{background:var(--night);color:#fff}
+.compare ul{list-style:none;margin-top:18px}
+.compare li{padding:12px 0;border-bottom:1px solid var(--line);font-size:15px}
+.compare div+div li{border-color:rgba(255,255,255,.15)}
+.faq details{border-bottom:1px solid var(--line);padding:24px 0}
+.faq summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:20px;font-family:"Cormorant Garamond",serif;font-size:24px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary:after{content:"+";font-family:Inter;font-weight:300}
+.faq details[open] summary:after{content:"−"}
+.faq p{color:var(--soft);margin-top:10px;max-width:760px}
+.quote{font-family:"Cormorant Garamond",serif;font-style:italic;font-size:clamp(26px,3vw,38px);line-height:1.3;max-width:900px}
+.quote cite{display:block;font-family:Inter;font-style:normal;font-size:12px;letter-spacing:.18em;text-transform:uppercase;margin-top:22px;color:var(--soft)}
+.ficha{width:100%;border-collapse:collapse}
+.ficha td{padding:16px 0;border-bottom:1px solid var(--line);font-size:15px}
+.ficha td:first-child{color:var(--soft);width:38%;font-size:12px;letter-spacing:.14em;text-transform:uppercase}
+.author{display:flex;gap:16px;align-items:center;padding:22px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:30px 0}
+.author .ph{width:56px;height:56px;border-radius:50%;flex:none}
+.author .ph:after,.author .ph span{display:none}
+.author b{font-weight:500}.author small{display:block;color:var(--soft);font-size:13px}
+.article{max-width:760px;margin:0 auto}
+.article p{margin:18px 0;font-size:17px}
+.article h2{font-size:34px;margin-top:44px}
+.chips{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:40px}
+.chips span{border:1px solid var(--line);padding:8px 16px;font-size:13px;cursor:pointer}
+.chips span.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.form{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.form label{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--soft);display:block}
+.form input,.form select{width:100%;margin-top:8px;border:0;border-bottom:1px solid #BFC3BF;padding:10px 0;font:inherit;background:transparent;outline:none;text-transform:none;letter-spacing:0;color:var(--ink)}
+.form .full{grid-column:1/-1}
+.cta{position:relative;color:#fff;text-align:center}
+.cta .ph{position:absolute;inset:0}
+.cta .ph:after{background:rgba(0,0,0,.55)}
+.cta .in{position:relative;z-index:3;padding:120px 32px}
+.cta h2{margin:18px auto 30px}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.tile{position:relative;display:block;aspect-ratio:16/10;overflow:hidden;color:#fff}
+.tile .ph{position:absolute;inset:0;transition:.4s}
+.tile:hover .ph{transform:scale(1.04)}
+.tile>div{position:absolute;left:22px;bottom:18px;right:22px;z-index:3}
+.tile b{display:block;font-family:"Cormorant Garamond",serif;font-weight:400;font-size:30px;line-height:1.1}
+.tile span{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.8)}
+.tile.plain{background:var(--night)}
+.tile.plain span{text-transform:none;letter-spacing:0;font-size:14px;display:block;margin-top:8px}
+@media (max-width:980px){.tiles{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.tiles{grid-template-columns:1fr}}
+.ph{background-color:#2A2F2C;background-size:cover;background-position:center}
+.author .av{width:56px;height:56px;border-radius:50%;flex:none;background:var(--night);color:#fff;display:flex;align-items:center;justify-content:center;font-family:"Cormorant Garamond",serif;font-size:20px}
+.rxbtn{position:fixed;left:24px;bottom:24px;z-index:70;background:var(--accent);color:#fff;border:0;padding:14px 20px;font:500 12px Inter,sans-serif;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;box-shadow:0 10px 30px rgba(0,0,0,.25);display:flex;align-items:center;gap:10px}
+.rxbtn:hover{background:#245a41}.rxbtn.hide{display:none}
+.rxbtn i{width:8px;height:8px;border-radius:50%;background:#8FF0B5;animation:pulse 1.6s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.rxhint{position:fixed;left:24px;bottom:82px;z-index:70;background:#fff;border:1px solid var(--line);padding:12px 16px;font-size:13px;max-width:280px;box-shadow:0 10px 30px rgba(0,0,0,.12)}
+.rx{position:fixed;top:0;right:0;bottom:0;width:440px;max-width:100%;background:#fff;z-index:80;box-shadow:-20px 0 50px rgba(0,0,0,.18);transform:translateX(105%);transition:.35s;display:flex;flex-direction:column}
+.rx.on{transform:none}
+.rx-h{display:flex;justify-content:space-between;align-items:center;padding:18px 22px;background:var(--night);color:#fff;font-size:14px}
+.rx-h button{background:none;border:0;color:#fff;font-size:18px;cursor:pointer}
+.rx-b{overflow:auto;padding:6px 22px 30px}
+.rx-s{padding:16px 0;border-bottom:1px solid var(--line)}
+.rx-s small{display:block;font-size:10px;letter-spacing:.16em;color:var(--accent);font-weight:600;margin-bottom:8px}
+.rx-s p{font-size:14px}
+.serp{border:1px solid var(--line);padding:12px;border-radius:8px}
+.serp .u{font-size:12px;color:#4D5156}.serp .t{color:#1A0DAB;font-size:17px;line-height:1.3;margin:2px 0}.serp .d{font-size:13px;color:#4D5156}
+.kw{display:flex;justify-content:space-between;gap:10px;font-size:13px;padding:4px 0;border-bottom:1px dashed var(--line)}
+.kw span:last-child{color:var(--accent);font-weight:600;white-space:nowrap}
+.ia{background:var(--night);color:#fff;border-radius:8px;padding:14px;font-size:13px}
+.ia i{display:block;color:#A9AFA7;margin-bottom:6px}.ia em{display:block;margin-top:8px;font-style:normal;font-size:11px;color:var(--accent2)}
+.rx pre{background:var(--mist);padding:12px;font-size:11px;line-height:1.5;overflow:auto;max-height:260px;white-space:pre-wrap}
+.lk a{display:inline-block;margin:0 6px 6px 0;font-size:12px;border:1px solid var(--line);padding:3px 8px;color:var(--accent)}
+.rx-f{font-size:11px;color:var(--soft);margin-top:16px}
+.map{list-style:none;border-top:1px solid var(--line)}
+.map li{display:grid;grid-template-columns:minmax(200px,1.2fr) 2fr 110px;gap:16px;padding:12px 0;border-bottom:1px solid var(--line);font-size:14px;align-items:baseline}
+.map li a{font-weight:500}.map li a:hover{color:var(--accent)}
+.map li span{color:var(--soft);font-size:13px}.map li em{font-style:normal;color:var(--accent);font-weight:600;text-align:right;font-size:13px}
+.map .grp{display:block;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);font-weight:600;padding-top:30px}
+.map li.lv1 a{font-family:"Cormorant Garamond",serif;font-size:22px}
+.map li.lv2{padding-left:28px}.map li.lv3{padding-left:56px}
+.map li.lv2 a:before,.map li.lv3 a:before{content:"└ ";color:#B9BEB7}
+.rx:not(.on){visibility:hidden}
+@media (max-width:760px){.map li{grid-template-columns:1fr;gap:2px}.map li em{text-align:left}.rxbtn{left:12px;bottom:12px;padding:12px 14px}}
+footer{background:var(--night);color:#AEB4AF;padding:80px 0 40px;font-size:14px}
+.ft{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px}
+.ft h5{color:#fff;font-size:11px;letter-spacing:.2em;text-transform:uppercase;font-weight:500;margin-bottom:16px}
+.ft a{display:block;padding:4px 0}.ft a:hover{color:#fff}
+.ft .logo{color:#fff}
+.legal{border-top:1px solid rgba(255,255,255,.12);margin-top:60px;padding-top:24px;font-size:12px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.wa{position:fixed;right:24px;bottom:24px;z-index:60;width:58px;height:58px;border-radius:50%;background:#1FA855;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.wa svg{width:28px;height:28px;fill:#fff}
+.fade{animation:f .5s ease}
+@keyframes f{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media (max-width:980px){
+ nav.main{display:none;position:absolute;top:76px;left:-20px;right:-20px;background:#fff;flex-direction:column;align-items:stretch;padding:10px 20px 20px;border-bottom:1px solid var(--line)}
+ nav.main.open{display:flex}
+ .dd .menu{position:static;opacity:1;visibility:visible;transform:none;border:0;padding:0 0 0 14px}
+ .burger{display:block}
+ .hd>.btn{display:none}
+ .stats{grid-template-columns:1fr 1fr}.stats div:nth-child(2){border-right:0}
+ .split,.compare,.form,.gallery{grid-template-columns:1fr}
+ .ft{grid-template-columns:1fr 1fr}
+ section{padding:70px 0}
+ .wrap{padding:0 20px}
+}
+</style>
+</head>
+<body>
+<div class="proto">Protótipo · Assessoria Atlas · fotos do portfólio TKWS</div>
+<header><div class="wrap hd">
+  <a class="logo" href="#home">TKWS<small>DO GROUP WS</small></a>
+  <nav class="main" id="nav">
+    <a href="#paz">Produto da paz</a>
+    <div class="dd"><a href="#planta">Soluções ▾</a><div class="menu"><a href="#planta">Comprei na planta</a><a href="#ondemand">Imóvel pronto ou usado</a><a href="#togo">Pronto pra ocupar</a><a href="#investidor">Pra investidores</a><a href="#metodo">WS Method</a></div></div>
+    <div class="dd"><a href="#projetos">Projetos ▾</a><div class="menu"><a href="#projetos">Todos os projetos</a><a href="#cidade/bc">Balneário Camboriú</a><a href="#cidade/itapema">Itapema</a><a href="#cidade/itajai">Itajaí</a><a href="#cidade/curitiba">Curitiba</a><a href="#cidade/sinop">Sinop</a></div></div>
+    <a href="#sobre">Sobre</a>
+    <a href="#acervo">Acervo</a>
+  </nav>
+  <a class="btn sm" href="#contato">Fale com um especialista</a>
+  <button class="burger" onclick="document.getElementById('nav').classList.toggle('open')" aria-label="Menu">☰</button>
+</div></header>
+<main id="app"></main>
+<button class="rxbtn" id="rxbtn" onclick="rx(1)"><i></i>Raio-x SEO + GEO</button>
+<div class="rxhint" id="rxhint">Clique pra ver como o Google e a IA leem esta página. <a href="#" onclick="this.parentNode.remove();return false" style="color:var(--accent)">ok</a></div>
+<aside class="rx" id="rx"></aside>
+<footer><div class="wrap">
+  <div class="ft">
+    <div><a class="logo" href="#home">TKWS<small>DO GROUP WS</small></a><p style="margin-top:22px;max-width:320px">Apartamentos de alto padrão prontos para morar. Projeto, obra e decoração em um contrato só.</p></div>
+    <div><h5>Soluções</h5><a href="#paz">Produto da paz</a><a href="#planta">Comprei na planta</a><a href="#ondemand">Imóvel pronto ou usado</a><a href="#togo">Pronto pra ocupar</a><a href="#investidor">Pra investidores</a></div>
+    <div><h5>Onde atuamos</h5><a href="#cidade/bc">Balneário Camboriú</a><a href="#cidade/itapema">Itapema</a><a href="#cidade/itajai">Itajaí</a><a href="#cidade/curitiba">Curitiba</a><a href="#cidade/sinop">Sinop</a><a href="#projetos">Todos os projetos</a></div>
+    <div><h5>TKWS</h5><a href="#sobre">Sobre</a><a href="#metodo">WS Method</a><a href="#acervo">Acervo</a><a href="#contato">Contato</a><a href="#mapa">Mapa do site</a></div>
+  </div>
+  <div class="legal"><span>TKWS · uma empresa do Group WS · Balneário Camboriú, SC</span><span>Instagram · YouTube · LinkedIn</span></div>
+</div></footer>
+<a class="wa" href="#contato" title="WhatsApp"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2s.2-1.1.2-1.2-.2-.2-.4-.3z"/></svg></a>
+<script>
+const IMG='https://tkws.groupws.com.br/images/';
+const ph=(src,t)=>`<div class="ph" style="background-image:url('${IMG}${src}.jpg')"><span>${t||''}</span></div>`;
+const hero=(src,eb,h,p,ctas,short,crumb)=>`<section class="hero ${short?'short':''}" style="padding:0">${ph(src,'')}<div class="wrap in">${crumb?`<div class="crumb">${crumb}</div>`:''}<div class="eyebrow">${eb}</div><h1>${h}</h1><p>${p}</p>${ctas&&ctas.length?`<div class="ctas">${ctas.map((c,i)=>`<a class="btn ${i?'line':'white'}" href="${c[1]}">${c[0]}</a>`).join('')}</div>`:''}</div></section>`;
+const cr=a=>[['home','Início']].concat(a).map(x=>`<a href="#${x[0]}">${x[1]}</a>`).join(' &nbsp;/&nbsp; ');
+const sec=(inner,cls)=>`<section class="${cls||''}"><div class="wrap">${inner}</div></section>`;
+const sh=(eb,t,lead)=>`<div class="sh"><div><div class="eyebrow" style="color:var(--accent)">${eb}</div><h2 style="margin-top:14px">${t}</h2></div>${lead?`<p class="lead">${lead}</p>`:''}</div>`;
+const cards=(a,wide)=>`<div class="cards ${wide?'wide':''}">${a.map(c=>`<a class="card" href="${c[3]}" ${c[5]?`data-city="${c[5]}"`:''}>${ph(c[0],c[4]||'')}<h3>${c[1]}</h3><p>${c[2]}</p><span class="more">Ver mais</span></a>`).join('')}</div>`;
+const steps=a=>`<div class="steps">${a.map((s,i)=>`<div><b>0${i+1}</b><h4>${s[0]}</h4><p>${s[1]}</p></div>`).join('')}</div>`;
+const faq=a=>`<div class="faq">${a.map(q=>`<details><summary>${q[0]}</summary><p>${q[1]}</p></details>`).join('')}</div>`;
+const stats=()=>`<div class="stats"><div><b>600+</b><span>obras entregues</span></div><div><b>120 dias</b><span>do contrato à chave</span></div><div><b>5</b><span>estados atendidos</span></div><div><b>4,9</b><span>nota no Google</span></div></div>`;
+const short=t=>`<div class="eyebrow" style="color:var(--accent)">Em poucas palavras</div><p class="answer" style="margin-top:20px">${t}</p>`;
+const cta=src=>`<section class="cta" style="padding:0">${ph(src||'hero/yachthouse-vista','')}<div class="in"><div class="eyebrow">Fale com a TKWS</div><h2 class="serif">Entregue o imóvel.<br>Receba pronto pra morar.</h2><a class="btn white" href="#contato">Fale com um especialista</a></div></section>`;
+const author=r=>`<div class="author"><div class="av">RW</div><div><b>Por Rodrigo Wayhs</b><small>${r||'Arquiteto e fundador da TKWS'}</small></div></div>`;
+const ficha=a=>`<table class="ficha">${a.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td></tr>`).join('')}</table>`;
+const gallery=a=>`<div class="gallery">${a.map(x=>ph(x[0],x[1])).join('')}</div>`;
+const SOL=[['modalidades/planta','Comprei na planta','O projeto começa enquanto o prédio ainda está em obra.','#planta'],['modalidades/on-demand','Imóvel pronto ou usado','Projeto exclusivo, sob medida, do começo ao fim.','#ondemand'],['modalidades/to-go','Pronto pra ocupar','Imóvel já projetado, decorado e mobiliado.','#togo'],['hero/living-sky-tower','Pra investidores','Unidade parada vira produto pronto pra vender ou alugar.','#investidor']];
+const mods=cur=>cards(SOL.filter(c=>c[3]!=='#'+cur));
+
+/* ---------- dados reais do portfólio ---------- */
+const CITY={
+ bc:{n:'Balneário Camboriú',uf:'SC',img:'hero/yachthouse-vista',kw:[['arquitetos balneário camboriú',320],['apartamento decorado balneário camboriú','a pesquisar'],['turnkey balneário camboriú',0]],s:'A cidade onde a TKWS nasceu e onde tem mais entregas.',a:'A TKWS é de Balneário Camboriú e já entregou apartamentos prontos em prédios como Yachthouse, Sky Tower e One Tower. Quem comprou aqui e mora em outra cidade é quem mais usa o serviço, porque não precisa acompanhar a obra.'},
+ itapema:{n:'Itapema',uf:'SC',img:'hero/noah-living',kw:[['apartamento decorado itapema','a pesquisar']],s:'Apartamentos prontos no litoral norte catarinense.',a:'Em Itapema, a TKWS entregou a cobertura Noah pronta para morar, com a mesma equipe e o mesmo método de Balneário Camboriú.'},
+ itajai:{n:'Itajaí',uf:'SC',img:'hero/bravissima-living',kw:[['apartamento decorado itajaí','a pesquisar']],s:'Do projeto à chave, a poucos minutos de Balneário.',a:'Em Itajaí, a TKWS entregou o Bravíssima pronto para morar: projeto, compras, obra e decoração num contrato só.'},
+ curitiba:{n:'Curitiba',uf:'PR',img:'projetos/seventy-upper-mansion',kw:[['arquitetura de interiores alto padrão curitiba','a pesquisar']],s:'O mesmo modelo turnkey na capital paranaense.',a:'Em Curitiba, a TKWS já entregou projetos de alto padrão em empreendimentos como o Age 360 e o Seventy Upper Mansion.'},
+ sinop:{n:'Sinop',uf:'MT',img:'projetos/casa-mondrian',kw:[['arquiteto de interiores sinop','a pesquisar']],s:'Alto padrão no Mato Grosso.',a:'Em Sinop, a TKWS entregou a Casa Mondrian, com projeto e execução acompanhados a distância.'}
+};
+const BLD={
+ yachthouse:{n:'Yachthouse',full:'Yachthouse by Pininfarina',c:'bc',img:'yachthouse/panorama',kw:[['yachthouse (3 variações)',1180],['yachthouse apartamento decorado','a pesquisar']],s:'O prédio onde a TKWS tem mais entregas.',a:'A TKWS já entregou dezenas de unidades no Yachthouse, do projeto à chave em até 120 dias. Conhece as plantas, as regras de obra do condomínio e a logística do prédio, o que evita surpresa e atraso.'},
+ onetower:{n:'One Tower',full:'One Tower',c:'bc',img:'projetos/one-tower',kw:[['one tower balneário camboriú',880]],s:'Apartamentos prontos em um dos prédios mais buscados de Balneário.',a:'No One Tower, a TKWS entrega apartamentos prontos para morar a partir da modalidade Planta, com o projeto começando antes da entrega das chaves.'},
+ skytower:{n:'Sky Tower',full:'Sky Tower',c:'bc',img:'projetos/sky-tower',kw:[['sky tower balneário camboriú',140]],s:'Coberturas com vista para o mar, prontas para morar ou vender.',a:'No Sky Tower, a TKWS entregou uma cobertura duplex pronta, com living, spa na suíte máster e decoração completa.'}
+};
+const PRJ={
+ luan:{n:'Cobertura Luan Santana',c:'bc',b:'yachthouse',t:'Cobertura',o:'Morar',img:'yachthouse/destaque',ano:'2025',g:[['yachthouse/m01','Living'],['yachthouse/m02','Estar'],['yachthouse/m03','Suíte']]},
+ yachtunid:{n:'Unidades no Yachthouse',c:'bc',b:'yachthouse',t:'Apartamentos',o:'Morar e temporada',img:'yachthouse/m04',g:[['yachthouse/m05','Living'],['yachthouse/m06','Cozinha'],['yachthouse/m07','Suíte']]},
+ skycob:{n:'Cobertura Sky Tower',c:'bc',b:'skytower',t:'Cobertura duplex',o:'Venda',img:'hero/living-sky-tower',g:[['hero/living-sky-tower','Living'],['ambientes/03','Spa da suíte máster'],['projetos/sky-tower','Estar']]},
+ onetower:{n:'Apartamento One Tower',c:'bc',b:'onetower',t:'Apartamento',o:'Morar',img:'modalidades/planta',g:[['projetos/one-tower','Living'],['modalidades/planta','Estar'],['ambientes/04','Cozinha']]},
+ casaview:{n:'Casa View',c:'bc',t:'Casa',o:'Morar',img:'projetos/casa-view',g:[['hero/casa-view-jantar','Sala de jantar'],['ambientes/01','Jantar'],['modalidades/on-demand','Estar']]},
+ theiss:{n:'Theiss Heim',c:'bc',t:'Apartamento',o:'Morar',img:'projetos/theiss-heim',g:[['projetos/theiss-heim','Living'],['ambientes/04','Cozinha'],['ambientes/05','Suíte']]},
+ noah:{n:'Noah Cobertura',c:'itapema',t:'Cobertura',o:'Morar',img:'projetos/noah-cobertura',g:[['hero/noah-living','Living'],['ambientes/02','Banheiro'],['modalidades/to-go','Estar']]},
+ bravissima:{n:'Bravíssima',c:'itajai',t:'Apartamento',o:'Morar',img:'projetos/bravissima',g:[['hero/bravissima-living','Living'],['ambientes/06','Varanda'],['projetos/bravissima','Estar']]},
+ age360:{n:'Age 360',c:'curitiba',t:'Apartamento',o:'Morar',img:'projetos/age-360',g:[['projetos/age-360','Living'],['ambientes/01','Jantar'],['ambientes/05','Suíte']]},
+ seventy:{n:'Seventy Upper Mansion',c:'curitiba',t:'Apartamento',o:'Morar',img:'projetos/seventy-upper-mansion',g:[['projetos/seventy-upper-mansion','Living'],['ambientes/04','Cozinha'],['ambientes/03','Banho']]},
+ mondrian:{n:'Casa Mondrian',c:'sinop',t:'Casa',o:'Morar',img:'projetos/casa-mondrian',g:[['ambientes/05','Suíte'],['projetos/casa-mondrian','Estar'],['ambientes/01','Jantar']]}
+};
+const where=p=>(p.b?BLD[p.b].n+' · ':'')+CITY[p.c].n;
+const prjCard=id=>{const p=PRJ[id];return [p.img,p.n,where(p),'#projeto/'+id,p.t,p.c]};
+const prjOf=f=>Object.keys(PRJ).filter(k=>f(PRJ[k]));
+const cityCount=c=>prjOf(p=>p.c===c).length;
+const slug=s=>s.normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/-$/,'');
+
+/* ---------- raio-x: o que o Google e a IA leem em cada página ---------- */
+const ORG={'@type':'HomeAndConstructionBusiness','@id':'#tkws','name':'TKWS','parentOrganization':{'@type':'Organization','name':'Group WS'},'founder':{'@type':'Person','name':'Rodrigo Wayhs','jobTitle':'Arquiteto e fundador'},'sameAs':['instagram.com/…','youtube.com/…','linkedin.com/…']};
+const FAQ_HOME=[['O que é turnkey?','É entregar o imóvel pronto para morar: projeto, obra, móveis e decoração, em um contrato só.'],['Em quanto tempo fica pronto?','Em até 120 dias após a aprovação do projeto, para imóveis sem intervenção civil.'],['Preciso acompanhar a obra?','Não. Você acompanha tudo a distância e só volta pra receber a chave.'],['Vocês atendem fora de Santa Catarina?','Sim. Já entregamos no Paraná e no Mato Grosso e atendemos outros estados.']];
+function RX(route,id){
+ const base={schema:{'@context':'https://schema.org'}};
+ if(route==='cidade'){const c=CITY[id];return {url:'/'+slug(c.n)+'/',title:`Apartamento pronto para morar em ${c.n} | TKWS`,desc:`${c.s} Do projeto à chave em até 120 dias, sem você acompanhar a obra.`,h1:`Apartamento pronto para morar em ${c.n}.`,q:`"Quem entrega apartamento de alto padrão pronto em ${c.n}?"`,kw:c.kw,ia:c.a,schema:{'@context':'https://schema.org','@type':'Service','name':`Apartamento pronto para morar em ${c.n}`,'provider':{'@id':'#tkws'},'areaServed':{'@type':'City','name':c.n}}}}
+ if(route==='predio'){const b=BLD[id],c=CITY[b.c];return {url:'/'+slug(c.n)+'/'+slug(b.n)+'/',title:`Apartamento pronto no ${b.n} | TKWS ${c.n}`,desc:`${b.s} Do projeto à chave em até 120 dias.`,h1:`Quem entrega apartamento pronto no ${b.n}?`,q:`"Quem mobilia apartamento no ${b.n}?"`,kw:b.kw,ia:b.a,schema:{'@context':'https://schema.org','@type':'Service','name':`Apartamento pronto no ${b.full}`,'provider':{'@id':'#tkws'},'location':{'@type':'Place','name':b.full,'address':{'@type':'PostalAddress','addressLocality':c.n}}}}}
+ if(route==='projeto'){const p=PRJ[id],c=CITY[p.c];return {url:'/'+slug(c.n)+'/'+(p.b?slug(BLD[p.b].n)+'/':'')+slug(p.n)+'/',title:`${p.n}: ${p.t.toLowerCase()} pronto em ${c.n} | TKWS`,desc:`Como a TKWS entregou ${p.n.toLowerCase().startsWith('cobertura')?'a ':'o projeto '}${p.n}${p.b?' no '+BLD[p.b].n:''}, em ${c.n}. Ficha técnica, fotos e prazo.`,h1:p.n,q:`"Exemplos de ${p.t.toLowerCase()} de alto padrão pronto em ${c.n}"`,kw:[[p.n.toLowerCase()+' '+c.n.toLowerCase(),'a pesquisar']],ia:`A TKWS entregou ${p.n}${p.b?' no '+BLD[p.b].n:''}, em ${c.n}, pronto para ${p.o.toLowerCase()}.`,schema:{'@context':'https://schema.org','@type':'CreativeWork','name':p.n,'creator':{'@id':'#tkws'},'locationCreated':{'@type':'Place','name':(p.b?BLD[p.b].full+', ':'')+c.n},'genre':p.t}}}
+ const R={
+  home:{url:'/',title:'Apartamento pronto para morar em Balneário Camboriú | TKWS',desc:'Projeto, compras, obra e decoração num contrato só. Do contrato à chave em até 120 dias, sem você acompanhar a obra.',h1:'Seu apartamento pronto para morar, sem você acompanhar a obra.',q:'"Quem entrega apartamento de alto padrão pronto para morar?"',kw:[['apartamento decorado',2400],['apartamento pronto para morar',1600],['tkws / group ws','marca']],ia:'A TKWS, do Group WS, entrega apartamentos de alto padrão prontos para morar em até 120 dias, com projeto, obra e decoração num contrato só. Já soma mais de 600 obras.',schema:Object.assign({'@context':'https://schema.org'},ORG,{'areaServed':Object.keys(CITY).map(k=>CITY[k].n)})},
+  paz:{url:'/apartamento-pronto-sem-acompanhar-obra/',title:'Apartamento pronto sem acompanhar a obra | TKWS',desc:'Comprou e mora longe? Você entrega o imóvel e recebe pronto pra morar. A TKWS cuida de tudo, do projeto à chave.',h1:'Comprou e não tem tempo de acompanhar a obra? A gente cuida de tudo.',q:'"Comprei em Balneário e moro em São Paulo. Quem cuida de tudo pra mim?"',kw:[['apartamento pronto para morar',1600],['decorar apartamento sem acompanhar obra','baixo volume, alta intenção'],['quem cuida da obra e decoração','pergunta típica de IA']],ia:'Pra quem comprou em Balneário Camboriú e mora em outra cidade, a TKWS assume projeto, compras, obra e decoração num contrato só e entrega o imóvel pronto, sem o dono precisar acompanhar.',schema:{'@context':'https://schema.org','@type':'Service','name':'Produto da paz','provider':{'@id':'#tkws'},'serviceType':'Turnkey residencial de alto padrão'}},
+  planta:{url:'/planta/',title:'Decoração de apartamento na planta | TKWS Planta',desc:'Comprou na planta? O projeto começa durante a obra e o pagamento acompanha a construtora.',h1:'Comprou na planta? O projeto começa antes da entrega das chaves.',q:'"Quando começar o projeto de interiores de um apartamento na planta?"',kw:[['apartamento na planta decoração','a pesquisar']],ia:'Na modalidade Planta da TKWS, o projeto é feito durante a obra da construtora, com pagamento escalonado.',schema:{'@context':'https://schema.org','@type':'Service','name':'TKWS Planta','provider':{'@id':'#tkws'}}},
+  ondemand:{url:'/on-demand/',title:'Projeto e obra de interiores em apartamento pronto | TKWS On Demand',desc:'Projeto exclusivo, sob medida, pra imóvel pronto ou usado. Do projeto à chave.',h1:'Um projeto só seu, do começo ao fim.',q:'"Quem faz projeto e obra de interiores em apartamento pronto?"',kw:[['arquiteto de interiores',590]],ia:'A modalidade On Demand faz projeto exclusivo pra imóvel pronto ou usado e entrega pronto pra morar.',schema:{'@context':'https://schema.org','@type':'Service','name':'TKWS On Demand','provider':{'@id':'#tkws'}}},
+  togo:{url:'/to-go/',title:'Apartamento decorado e mobiliado pronto pra ocupar | TKWS To Go',desc:'Imóvel já projetado, decorado e mobiliado. É escolher e ocupar.',h1:'Imóvel já projetado, decorado e mobiliado.',q:'"Apartamento decorado pronto pra morar em Balneário"',kw:[['apartamento decorado',2400]],ia:'A modalidade To Go entrega imóvel já projetado, decorado e mobiliado, pronto pra ocupar.',schema:{'@context':'https://schema.org','@type':'Service','name':'TKWS To Go','provider':{'@id':'#tkws'}}},
+  investidor:{url:'/investidores/',title:'Apartamento decorado vende mais rápido? Turnkey pra investidor | TKWS',desc:'Unidade parada vira produto pronto. Mais interesse de quem visita.',h1:'Tem uma unidade parada? Pronta, ela vende e aluga mais rápido.',q:'"Apartamento decorado vende mais? Vale fazer turnkey pra vender em BC?"',kw:[['apartamento decorado vende mais','a pesquisar']],ia:'Pra investidor, a TKWS transforma a unidade parada em imóvel pronto pra morar, o que costuma aumentar o interesse de quem visita.',schema:{'@context':'https://schema.org','@type':'Service','name':'TKWS para investidores','provider':{'@id':'#tkws'}}},
+  metodo:{url:'/ws-method/',title:'WS Method: como a TKWS entrega um apartamento em até 120 dias',desc:'O método que organiza decisões, projeto, compras, obra e pós-entrega.',h1:'Como a gente entrega em até 120 dias.',q:'"Como funciona o turnkey? Quanto tempo leva?"',kw:[['como funciona turnkey','a pesquisar']],ia:'O WS Method organiza decisões, projeto, compras, obra, qualidade e pós-entrega, o que permite entregar em até 120 dias.',schema:{'@context':'https://schema.org','@type':'HowTo','name':'WS Method','step':['Decisões','Projeto','Compras','Execução','Qualidade','Pós-entrega']}},
+  projetos:{url:'/projetos/',title:'Projetos: apartamentos entregues prontos para morar | TKWS',desc:'Mais de 600 obras. Filtre por cidade e veja ficha técnica e prazo.',h1:'Mais de 600 obras entregues.',q:'"Exemplos de apartamento turnkey de alto padrão"',kw:[['projetos turnkey','a pesquisar']],ia:'',schema:{'@context':'https://schema.org','@type':'CollectionPage','name':'Projetos TKWS'}},
+  sobre:{url:'/sobre/',title:'Sobre a TKWS e Rodrigo Wayhs | Group WS',desc:'A TKWS é a empresa de turnkey de alto padrão do Group WS, fundada por Rodrigo Wayhs em Balneário Camboriú.',h1:'A TKWS é a empresa de turnkey de alto padrão do Group WS.',q:'"O que é a TKWS? Quem é o fundador?"',kw:[['tkws','marca'],['group ws','marca'],['rodrigo wayhs','marca']],ia:'A TKWS é a empresa de turnkey do Group WS, fundada pelo arquiteto Rodrigo Wayhs em Balneário Camboriú. Entrega apartamentos prontos para morar em até 120 dias.',schema:Object.assign({'@context':'https://schema.org'},ORG)},
+  acervo:{url:'/acervo/',title:'Acervo: perguntas e comparativos sobre apartamento pronto | TKWS',desc:'Respostas diretas pras dúvidas de quem vai deixar o apartamento pronto.',h1:'Perguntas de quem vai deixar o apartamento pronto.',q:'Cada artigo responde uma pergunta real',kw:[['o que é turnkey','a pesquisar'],['quanto custa mobiliar apartamento','a pesquisar']],ia:'',schema:{'@context':'https://schema.org','@type':'Blog','name':'Acervo TKWS'}},
+  art1:{url:'/acervo/turnkey-ou-contratar-separado/',title:'Turnkey ou contratar arquiteto, marceneiro e loja separado?',desc:'Comparamos prazo, responsabilidade e o seu tempo pra você decidir.',h1:'Turnkey ou contratar arquiteto, marceneiro e loja separado?',q:'"Vale mais a pena turnkey ou contratar separado?"',kw:[['turnkey vale a pena','a pesquisar']],ia:'Pra quem não pode acompanhar obra, o turnkey tende a sair melhor: um contrato, um prazo e um responsável. Contratar separado dá mais controle, mas exige tempo.',schema:{'@context':'https://schema.org','@type':'Article','headline':'Turnkey ou contratar separado?','author':{'@type':'Person','name':'Rodrigo Wayhs'},'dateModified':'2026-09'}},
+  mapa:{url:'/mapa-do-site/',title:'Mapa do site | TKWS',desc:'Todas as páginas do site organizadas por nível.',h1:'Mapa do site',q:'',kw:[],ia:'',schema:{'@context':'https://schema.org','@type':'WebPage','name':'Mapa do site'}},
+  contato:{url:'/contato/',title:'Fale com um especialista | TKWS',desc:'Conte sobre o seu imóvel e receba uma proposta.',h1:'Conte sobre o seu imóvel.',q:'',kw:[],ia:'',schema:Object.assign({'@context':'https://schema.org'},ORG,{'telephone':'um número só, igual em todo lugar'})}
+ };
+ return R[route]||R.home;
+}
+function rxHTML(r){const links=[...new Set([...document.querySelectorAll('#app a[href^="#"]')].map(a=>a.getAttribute('href')))].slice(0,14);
+ return `<div class="rx-h"><b>Como o Google e a IA leem esta página</b><button onclick="rx(0)" aria-label="Fechar">✕</button></div>
+ <div class="rx-b">
+ <div class="rx-s"><small>NO GOOGLE (SEO)</small><div class="serp"><div class="u">tkws.groupws.com.br${r.url}</div><div class="t">${r.title}</div><div class="d">${r.desc}</div></div></div>
+ <div class="rx-s"><small>TÍTULO DA PÁGINA (H1)</small><p>${r.h1}</p></div>
+ ${r.q?`<div class="rx-s"><small>PERGUNTA QUE ESTA PÁGINA RESPONDE</small><p>${r.q}</p></div>`:''}
+ ${r.kw.length?`<div class="rx-s"><small>PALAVRAS-ALVO · BUSCAS POR MÊS</small>${r.kw.map(k=>`<div class="kw"><span>${k[0]}</span><span>${typeof k[1]==='number'?k[1].toLocaleString('pt-BR'):k[1]}</span></div>`).join('')}</div>`:''}
+ ${r.ia?`<div class="rx-s"><small>COMO A IA PODE CITAR A TKWS (GEO)</small><div class="ia"><i>${r.q}</i>${r.ia}<em>Fonte: tkws.groupws.com.br${r.url}</em></div></div>`:''}
+ <div class="rx-s"><small>FICHA NO CÓDIGO (SCHEMA · INVISÍVEL PRO VISITANTE)</small><pre>${JSON.stringify(r.schema,null,2).replace(/</g,'&lt;')}</pre></div>
+ <div class="rx-s"><small>LINKS INTERNOS QUE SAEM DAQUI</small><p class="lk">${links.map(l=>`<a href="${l}">${l.replace('#','/')}</a>`).join('')}</p></div>
+ <p class="rx-f">Buscas: Ubersuggest, set/2026. "a pesquisar" será confirmado com o Search Console. Protótipo Assessoria Atlas.</p></div>`}
+
+function cityTiles(ex){return `<div class="tiles">${Object.keys(CITY).filter(k=>k!==ex).map(k=>{const c=CITY[k];return `<a class="tile" href="#cidade/${k}">${ph(c.img,'')}<div><b>${c.n}</b><span>${c.uf} · ${cityCount(k)} ${cityCount(k)>1?'projetos':'projeto'}</span></div></a>`}).join('')}<a class="tile plain" href="#contato"><div><b>Outras cidades</b><span>São Paulo, Rio Grande do Sul e onde você estiver. Atendemos a distância.</span></div></a></div>`}
+
+function modPage(img,eb,h,p,ans,id,extra){return hero(img,eb,h,p,[['Quero conversar','#contato']],1,cr([]))
+ +sec(short(ans))+(extra||'')
+ +sec(sh('Como funciona','Do projeto à chave')+steps([['Conversa','Entendemos o seu momento e como o imóvel vai ser usado.'],['Projeto','Você aprova uma vez, com orçamento fechado.'],['Execução','Compras, marcenaria e obra com a nossa equipe.'],['Entrega','Pronto pra morar, até o enxoval.']]),'night')
+ +sec(sh('Projetos','Entregas nessa modalidade')+cards(['luan','noah','age360'].map(prjCard)))
+ +sec(sh('Outras soluções','Compare as modalidades')+mods(id),'mist')+cta(img)}
+
+function cityPage(k){const c=CITY[k];const blds=Object.keys(BLD).filter(b=>BLD[b].c===k);
+ return hero(c.img,c.n+' · '+c.uf,'Apartamento pronto para morar em '+c.n+'.',c.s,[['Falar com um especialista','#contato']],1,cr([['projetos','Projetos']]))
+ +sec(short(c.a))
+ +(blds.length?sec(sh('Prédios','Onde já entregamos em '+c.n,'Nos prédios com mais entregas, a TKWS já conhece a planta, as regras do condomínio e a logística de obra.')+cards(blds.map(b=>[BLD[b].img,BLD[b].full,prjOf(p=>p.b===b).length+(prjOf(p=>p.b===b).length>1?' projetos':' projeto')+' · '+BLD[b].s,'#predio/'+b,'Prédio'])),'mist'):'')
+ +sec(sh('Projetos','Entregas em '+c.n)+cards(prjOf(p=>p.c===k).map(prjCard)))
+ +sec(`<div class="split"><div>${ph('ambientes/0'+(1+Object.keys(CITY).indexOf(k)),'')}</div><div><div class="eyebrow" style="color:var(--accent)">Mora em outra cidade?</div><h2 style="margin:14px 0 20px">Comprou em ${c.n} e não tem como acompanhar a obra?</h2><p class="lead">É pra isso que existe o produto da paz. Você entrega o imóvel e recebe pronto, sem viagem e sem reunião com cinco fornecedores.</p><a class="btn" style="margin-top:30px" href="#paz">Conheça o produto</a></div></div>`,'mist')
+ +sec(sh('Dúvidas','Perguntas de quem comprou em '+c.n)+faq([['Vocês têm equipe em '+c.n+'?','A TKWS trabalha com equipe própria e fornecedores homologados, coordenados pelo mesmo método em todas as cidades.'],['Quanto tempo leva?','Até 120 dias após a aprovação do projeto, pra imóveis sem intervenção civil.'],['Preciso estar na cidade?','Não. Você aprova o projeto e acompanha tudo a distância.']]))
+ +sec(sh('Onde mais atuamos','Outras cidades')+cityTiles(k))+cta(c.img)}
+
+function bldPage(k){const b=BLD[k],c=CITY[b.c];const others=Object.keys(BLD).filter(x=>x!==k&&BLD[x].c===b.c);
+ return hero(b.img,b.full+' · '+c.n,'Quem entrega apartamento pronto no '+b.n+'?',b.s,[['Tenho unidade nesse prédio','#contato']],1,cr([['projetos','Projetos'],['cidade/'+b.c,c.n]]))
+ +sec(short(b.a))
+ +(k==='yachthouse'?sec(gallery([['yachthouse/m05','Living'],['yachthouse/m06','Estar'],['yachthouse/m08','Suíte']]),'tight'):'')
+ +sec(sh('Unidades entregues aqui','Projetos no '+b.n)+cards(prjOf(p=>p.b===k).map(prjCard)),'mist')
+ +sec(sh('Dúvidas de quem comprou aqui','Perguntas sobre o '+b.n)+faq([['Quanto tempo leva?','Até 120 dias após a aprovação do projeto.'],['Vocês conhecem as regras de obra do condomínio?','Sim. A TKWS já fez entregas no '+b.n+' e conhece horários, acessos e exigências do prédio.'],['Dá pra fazer sem eu estar em '+c.n+'?','Sim. Você aprova o projeto e acompanha tudo a distância.']])+author())
+ +(others.length?sec(sh('Outros prédios em '+c.n,'Veja também')+cards(others.map(o=>[BLD[o].img,BLD[o].full,BLD[o].s,'#predio/'+o,'Prédio'])),'mist'):'')+cta(b.img)}
+
+function prjPage(k){const p=PRJ[k],c=CITY[p.c];const crumb=[['projetos','Projetos'],['cidade/'+p.c,c.n]].concat(p.b?[['predio/'+p.b,BLD[p.b].n]]:[]);
+ const rel=prjOf(x=>x!==p&&x.c===p.c).slice(0,3);const relAll=rel.length?rel:['luan','noah','age360'].filter(x=>x!==k);
+ return hero(p.img,'Projeto · '+where(p),p.n,k==='luan'?'Do projeto à entrega em menos de 90 dias, sem o cliente precisar acompanhar a obra.':(p.o==='Venda'?'Uma cobertura que virou produto pronto pra vender.':p.t+' entregue pronto pra '+p.o.toLowerCase()+'.'),[['Quero algo assim','#contato']],0,cr(crumb))
+ +sec(`<div class="split"><div>${ficha([['Cidade',c.n+' · '+c.uf]].concat(p.b?[['Prédio',BLD[p.b].full]]:[]).concat([['Tipo',p.t],['Objetivo',p.o],['Prazo','Até 120 dias'],['Ano',p.ano||'—']]))}</div><div>${ph(p.g[0][0],k==='luan'?'Vídeo do projeto · YouTube':p.g[0][1])}</div></div>`)
+ +sec(gallery(p.g),'tight')
+ +sec(`<div class="article"><h2>O projeto</h2><p>${k==='luan'?'O pedido era um apartamento pronto pra receber a família e os amigos, com a personalidade do cliente e sem que ele precisasse acompanhar a obra. A TKWS assumiu projeto, compras, marcenaria e decoração, e entregou a cobertura em menos de 90 dias.':'Aqui entra a história do projeto: o que o cliente pediu, as decisões de projeto e como foi a entrega. Contada com a autorização do cliente.'}</p></div>`)
+ +sec(`<p class="quote">"Depoimento do cliente, com nome, se autorizado."<cite>Cliente · ${c.n}</cite></p>`,'mist')
+ +sec(sh('Veja também','Outros projetos')+cards(relAll.map(prjCard)))+cta(p.img)}
+
+function mapaPage(){const item=(href,name,r,cls)=>`<li class="${cls||''}"><a href="${href}">${name}</a><span>${r.q||''}</span><em>${r.kw&&r.kw[0]?(typeof r.kw[0][1]==='number'?r.kw[0][1].toLocaleString('pt-BR')+'/mês':r.kw[0][1]):''}</em></li>`;
+ let h=`<ul class="map">${item('#home','Início',RX('home'))}`;
+ h+=`<li class="grp">Produto e soluções</li>`+['paz','planta','ondemand','togo','investidor','metodo'].map(x=>item('#'+x,{paz:'Produto da paz',planta:'Comprei na planta',ondemand:'Imóvel pronto ou usado',togo:'Pronto pra ocupar',investidor:'Pra investidores',metodo:'WS Method'}[x],RX(x))).join('');
+ h+=`<li class="grp">Cidades → prédios → projetos</li>`;
+ Object.keys(CITY).forEach(k=>{h+=item('#cidade/'+k,CITY[k].n,RX('cidade',k),'lv1');
+  Object.keys(BLD).filter(b=>BLD[b].c===k).forEach(b=>{h+=item('#predio/'+b,BLD[b].full,RX('predio',b),'lv2');prjOf(p=>p.b===b).forEach(p=>h+=item('#projeto/'+p,PRJ[p].n,RX('projeto',p),'lv3'))});
+  prjOf(p=>p.c===k&&!p.b).forEach(p=>h+=item('#projeto/'+p,PRJ[p].n,RX('projeto',p),'lv2'))});
+ h+=`<li class="grp">Autoridade</li>`+[['sobre','Sobre e Rodrigo Wayhs'],['acervo','Acervo'],['art1','Turnkey ou contratar separado?']].map(x=>item('#'+x[0],x[1],RX(x[0]))).join('')+'</ul>';
+ return hero('hero/casa-view-jantar','Mapa do site','Cada página responde uma pergunta.','A estrutura inteira: cidades, prédios e projetos ligados entre si e ao produto.',[],1,cr([]))+sec(`<p class="lead" style="margin-bottom:34px">Ao lado de cada página: a pergunta que ela responde e o volume de busca da palavra principal.</p>`+h)}
+
+const P={
+home:()=>hero('hero/yachthouse-vista','TKWS · do Group WS','Seu apartamento pronto para morar, sem você acompanhar a obra.','Projeto, compras, marcenaria, obra e decoração em um contrato só. Você aprova o projeto e recebe a chave.',[['Conheça o produto da paz','#paz'],['Ver projetos','#projetos']])
+ +sec(stats(),'tight')
+ +sec(`<div class="press"><small>Na imprensa</small><span>Forbes</span><span>Revista USE</span><span>NSC Total</span><span>Economia SC</span></div>`,'tight mist')
+ +sec(`<div class="split"><div>${ph('hero/living-sky-tower','Sky Tower · Balneário Camboriú')}</div><div><div class="eyebrow" style="color:var(--accent)">Produto da paz</div><h2 style="margin:14px 0 20px">Comprou e mora longe? A gente cuida de tudo.</h2><p class="lead">Você entrega o imóvel e esquece. Sem reunião com cinco fornecedores, sem viagem pra ver obra, sem prazo que muda no caminho.</p><a class="btn" style="margin-top:30px" href="#paz">Conheça o produto</a></div></div>`)
+ +sec(sh('Pra cada momento do imóvel','Como a TKWS pode te atender')+mods(),'mist')
+ +sec(sh('Projetos','Apartamentos que já entregamos','Mais de 600 obras. Cada projeto com ficha técnica e prazo.')+cards(['luan','skycob','noah'].map(prjCard),1)+`<div style="margin-top:40px"><a class="btn line" href="#projetos">Ver todos os projetos</a></div>`)
+ +sec(sh('Onde já entregamos','De Balneário Camboriú pro Brasil','Cinco estados. E cliente que mora em qualquer lugar.')+cityTiles(),'mist')
+ +sec(sh('WS Method','Como a gente entrega em até 120 dias')+steps([['Conversa','Entendemos como você vai usar o imóvel.'],['Projeto','Você aprova uma vez.'],['Execução','Compras, marcenaria e obra com a nossa equipe.'],['Entrega','Imóvel pronto, até o enxoval.']]),'night')
+ +sec(sh('Perguntas frequentes','O que as pessoas perguntam antes de começar')+faq(FAQ_HOME))
+ +cta(),
+paz:()=>hero('hero/living-sky-tower','Produto da paz','Comprou e não tem tempo de acompanhar a obra? A gente cuida de tudo.','Você entrega o imóvel e esquece. A gente devolve pronto pra morar.',[['Quero conversar','#contato']],0,cr([]))
+ +sec(short('A TKWS assume o projeto, as compras, a obra e a decoração do seu apartamento, em um contrato só, e entrega pronto pra morar. Você aprova o projeto uma vez e recebe a chave. Nada de reunião com cinco fornecedores nem viagem pra ver obra.'))
+ +sec(`<div class="split"><div><div class="eyebrow" style="color:var(--accent)">Pra quem é</div><h2 style="margin:14px 0 20px">Pra quem comprou em Balneário e mora em outro lugar.</h2><p class="lead">São Paulo, Porto Alegre, Curitiba ou fora do Brasil. A maioria de quem compra em Balneário Camboriú não mora na cidade. O produto da paz foi pensado pra essa pessoa: ela não tem tempo de viajar pra acompanhar obra, e não quer virar gerente de cinco fornecedores.</p></div><div>${ph('yachthouse/m02','Yachthouse · Balneário Camboriú')}</div></div>`)
+ +sec(`<div class="compare"><div><div class="eyebrow">Do jeito tradicional</div><ul><li>Reunião com arquiteto, marceneiro, loja e obra</li><li>Viagens pra acompanhar</li><li>Prazo e preço que mudam no caminho</li><li>Você vira gerente da obra</li></ul></div><div><div class="eyebrow" style="color:var(--accent2)">Com a TKWS</div><ul><li>Um contrato e um responsável</li><li>Atualizações sem você precisar ir</li><li>Prazo e investimento definidos</li><li>Você só recebe a chave</li></ul></div></div>`,'mist')
+ +sec(sh('Como funciona','Quatro passos até a chave')+steps([['Conversa','Online, no seu tempo.'],['Projeto','Aprovado uma vez.'],['Execução','Tudo com a nossa equipe.'],['Entrega','Pronto, até o enxoval.']]),'night')
+ +sec(sh('Quem já escolheu assim','Projetos')+cards(['luan','skycob','bravissima'].map(prjCard),1))
+ +sec(sh('Dúvidas','Perguntas sobre o produto')+faq([['Moro em outro estado. Funciona?','Funciona. Esse é justamente o público do produto: você aprova o projeto a distância e só volta pra receber a chave.'],['Quanto custa?','Depende do imóvel e do escopo. O investimento é apresentado fechado junto com o projeto.'],['Posso mudar algo no meio do caminho?','Pode, dentro das regras combinadas no contrato.'],['E se atrasar?','O prazo está no contrato, e quem responde é uma empresa só.']])+author(),'mist')
+ +cta('hero/living-sky-tower'),
+planta:()=>modPage('modalidades/planta','Comprei na planta','Comprou na planta? O projeto começa antes da entrega das chaves.','Quando a construtora entregar, o seu apartamento já está encaminhado.','Na modalidade Planta, o projeto é feito enquanto o prédio ainda está em obra, e o pagamento acompanha o cronograma da construtora. Assim, o apartamento fica pronto bem mais perto da entrega das chaves.','planta'),
+ondemand:()=>modPage('modalidades/on-demand','Imóvel pronto ou usado','Um projeto só seu, do começo ao fim.','Para o imóvel que você já tem, novo ou usado.','Na modalidade On Demand, o projeto é exclusivo e feito pro seu imóvel. A TKWS cuida do projeto, da obra e da decoração, e entrega pronto pra morar.','ondemand'),
+togo:()=>modPage('modalidades/to-go','Pronto pra ocupar','Imóvel já projetado, decorado e mobiliado.','Pra quem quer escolher e já ocupar.','Na modalidade To Go, o imóvel já vem projetado, decorado e mobiliado. É escolher e ocupar.','togo'),
+investidor:()=>modPage('hero/living-sky-tower','Pra investidores','Tem uma unidade parada? Pronta, ela vende e aluga mais rápido.','Imóvel pronto é mais fácil de visitar, de imaginar e de vender.','A TKWS transforma a unidade parada em produto pronto pra morar. Quem visita enxerga o imóvel funcionando, e não uma planta vazia.','investidor',sec(sh('Caso real','Cobertura no Sky Tower')+cards([prjCard('skycob')],1),'mist')),
+projetos:()=>hero('hero/casa-view-jantar','Projetos','Mais de 600 obras entregues.','Filtre por cidade. Cada projeto tem ficha técnica e prazo.',[],1,cr([]))
+ +sec(`<div class="chips" id="flt"><span class="on" data-f="all">Todas as cidades</span>${Object.keys(CITY).map(k=>`<span data-f="${k}">${CITY[k].n}</span>`).join('')}</div><div id="grid">${cards(Object.keys(PRJ).map(prjCard))}</div>`)
+ +sec(sh('Onde já entregamos','As cidades')+cityTiles(),'mist')+cta(),
+sobre:()=>hero('hero/noah-living','Sobre','A TKWS é a empresa de turnkey de alto padrão do Group WS.','Fundada pelo arquiteto Rodrigo Wayhs, em Balneário Camboriú.',[],1,cr([]))
+ +sec(`<p class="answer">A TKWS entrega apartamentos de alto padrão prontos para morar, do projeto ao enxoval, em um contrato só e em até 120 dias. Faz parte do Group WS, que reúne arquitetura, construção e interiores.</p>`)
+ +sec(`<div class="split"><div>${ph('ambientes/01','')}</div><div><div class="eyebrow" style="color:var(--accent)">Fundador</div><h2 style="margin:14px 0 20px">Rodrigo Wayhs</h2><p class="lead">Arquiteto, fundador e CEO do Group WS. Autor do livro "Disruptivo" e cidadão honorário de Balneário Camboriú. Criou o modelo turnkey da TKWS a partir de uma ideia: o bem mais valioso do cliente é o tempo.</p></div></div>`,'mist')
+ +sec(`<div class="press"><small>Na imprensa</small><span>Forbes</span><span>Revista USE</span><span>NSC Total</span><span>Economia SC</span></div>`,'tight')
+ +sec(sh('Group WS','Parte de um grupo')+`<p class="lead">A TKWS faz parte do Group WS. Uma marca, um nome oficial, escrito sempre igual.</p><div style="margin-top:30px"><a class="btn line" href="#metodo">Conheça o WS Method</a></div>`)+cta('hero/noah-living'),
+metodo:()=>hero('ambientes/04','WS Method','Como a gente entrega em até 120 dias.','O método por trás da promessa.',[],1,cr([['sobre','Sobre']]))
+ +sec(steps([['Decisões','O que você espera do imóvel.'],['Projeto','Aprovado uma vez.'],['Compras','Com fornecedores homologados.'],['Execução','Obra e marcenaria.'],['Qualidade','Checagem antes da entrega.'],['Pós-entrega','Suporte depois da chave.']]),'night')
+ +sec(sh('Soluções','Onde o método é aplicado')+mods(),'mist')+cta('ambientes/04'),
+acervo:()=>hero('ambientes/06','Acervo','Perguntas de quem vai deixar o apartamento pronto.','Respostas diretas, escritas por quem faz.',[],1,cr([]))
+ +sec(`<div class="chips"><span class="on">Todos</span><span>Comparativos</span><span>Custos</span><span>Balneário Camboriú</span><span>Investimento</span></div>`+cards([['ambientes/01','Turnkey ou contratar arquiteto, marceneiro e loja separado?','Comparativo · 6 min','#art1'],['ambientes/04','O que é turnkey e como funciona','Guia','#art1'],['hero/yachthouse-vista','Quanto custa deixar um apartamento pronto em Balneário?','Custos','#art1'],['hero/living-sky-tower','Apartamento decorado vende mais?','Investimento','#art1'],['modalidades/planta','Planta, On Demand ou To Go: qual escolher?','Comparativo','#art1'],['ambientes/06','Turnkey ou decorado da construtora?','Comparativo','#art1']],1))+cta('ambientes/06'),
+art1:()=>hero('ambientes/01','Acervo · Comparativo','Turnkey ou contratar arquiteto, marceneiro e loja separado?','O que muda em prazo, responsabilidade e no seu tempo.',[],1,cr([['acervo','Acervo']]))
+ +sec(`<div class="article">${author('Arquiteto e fundador da TKWS · atualizado em setembro de 2026')}<p class="answer" style="font-size:26px">Se você não pode acompanhar a obra, turnkey costuma sair melhor: um contrato, um prazo e um responsável. Se você quer escolher cada fornecedor e tem tempo pra acompanhar, contratar separado dá mais controle.</p><h2>Prazo</h2><p>No turnkey, o prazo é um só e está no contrato. Contratando separado, cada fornecedor tem o seu, e o atraso de um puxa o outro. É comum a marcenaria esperar a obra, e a loja esperar a marcenaria.</p><h2>Quem responde</h2><p>No turnkey, uma empresa responde por tudo. Separado, cada fornecedor responde pela sua parte, e quem coordena o todo é você.</p><h2>O seu tempo</h2><p>No turnkey, você aprova o projeto e recebe a chave. Separado, são reuniões, visitas e decisões ao longo de meses. Pra quem mora em outra cidade, isso costuma pesar mais do que o preço.</p>${ficha([['Prazo','Turnkey: até 120 dias · Separado: depende de cada um'],['Seu tempo','Turnkey: aprovar o projeto · Separado: reuniões e visitas'],['Responsável','Turnkey: uma empresa · Separado: vários']])}<h2>Perguntas</h2>${faq([['Turnkey é mais caro?','Depende. Você paga pela gestão, mas tende a economizar em retrabalho e atraso.'],['Posso escolher os móveis?','Sim, tudo passa pela aprovação do projeto.']])}</div>`)
+ +sec(sh('Continue lendo','Relacionados')+cards([['hero/living-sky-tower','Produto da paz','Pra quem não quer acompanhar obra.','#paz'],['hero/casa-view-jantar','Projetos','Veja entregas reais.','#projetos'],['ambientes/04','WS Method','Como funciona por dentro.','#metodo']],1),'mist'),
+mapa:()=>mapaPage(),
+contato:()=>hero('hero/bravissima-living','Contato','Conte sobre o seu imóvel.','A gente responde em até um dia útil.',[],1,cr([]))
+ +sec(`<div class="split"><div><div class="form"><label>Nome<input></label><label>WhatsApp<input></label><label>Cidade do imóvel<input></label><label>Prédio<input></label><label class="full">O imóvel é pra<select><option>Morar</option><option>Investir</option><option>Ainda não sei</option></select></label><label class="full">Como você conheceu a TKWS?<select><option>Indicação</option><option>Google</option><option>ChatGPT ou outra IA</option><option>Instagram</option><option>Imprensa</option></select></label></div><a class="btn" style="margin-top:34px" href="#home">Enviar</a></div><div><h3>Balneário Camboriú, SC</h3><p class="lead" style="margin-top:12px;font-size:16px">WhatsApp oficial<br>E-mail oficial</p><div style="margin-top:30px">${ph('ambientes/06','')}</div></div></div>`)
+};
+let RXOPEN=false;
+function rx(on){RXOPEN=on;document.getElementById('rx').classList.toggle('on',on);document.getElementById('rxbtn').classList.toggle('hide',on);document.getElementById('rxhint')&&document.getElementById('rxhint').remove()}
+function go(){const h=(location.hash||'#home').slice(1);const [r,id]=h.split('/');let html,rxd;
+ if(r==='cidade'&&CITY[id]){html=cityPage(id);rxd=RX('cidade',id)}else if(r==='predio'&&BLD[id]){html=bldPage(id);rxd=RX('predio',id)}else if(r==='projeto'&&PRJ[id]){html=prjPage(id);rxd=RX('projeto',id)}else{const k=P[r]?r:'home';html=P[k]();rxd=RX(k)}
+ const app=document.getElementById('app');app.innerHTML=html;app.classList.remove('fade');void app.offsetWidth;app.classList.add('fade');document.getElementById('nav').classList.remove('open');window.scrollTo(0,0);
+ document.getElementById('rx').innerHTML=rxHTML(rxd);
+ document.querySelectorAll('.chips span').forEach(s=>s.onclick=()=>{s.parentNode.querySelectorAll('span').forEach(x=>x.classList.remove('on'));s.classList.add('on');const f=s.dataset.f;if(f)document.querySelectorAll('#grid .card').forEach(c=>c.style.display=(f==='all'||c.dataset.city===f)?'':'none')});}
+window.addEventListener('hashchange',go);go();
+
+</script>
+</body>
+</html>
